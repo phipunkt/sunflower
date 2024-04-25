@@ -14,9 +14,32 @@ There is no handling of a battery storage. As only the grid consumption is monit
 - Fronius inverter with datamanager (Symo, Gen 24, etc.)
 - go-e charger (HOME with V3 hardware for phase change, Gemini)
 - [Pimoroni Badger 2040 W](https://shop.pimoroni.com/products/badger-2040-w?variant=40514062188627)
-- EV car
+- Electric vehicle
+
+## Usage
+
+After initial setup, pv charging is mostly automatic.
+
+- In the go-e app under settings you need to make sure charging in allowed in the scheduler and define a kWh limit if you want to only charge to a certain level.
+- Set charge mode to standard (no ECO or next trip mode)
+- Plug Badger 2040 W on a power supply, USB or on batteries to run.
+- Information is shown on the display
+- When data is retrived and the logic cycle is running, the LED in on.
+- Keep `UP` or `DOWN` button pressed during cycle (LED on) to change charge limit (+/- 2.5 kWh).
+
+- To stop unplug from power supply as the program will always run.
+
+#### Attention
+
+> If you want to charge when there is not enough pv power (e.g. during the night) or charge with full power, you have 2 options. Otherwise it will always stop the charging.
+> - Stop the program by cutting the power supply.
+> - Use the next trip mode. (Currently behaviour not fully tested)
 
 ## Installation
+
+### go-e charger
+
+- [Enable local API V2](https://github.com/goecharger/go-eCharger-API-v2/blob/main/http-de.md)
 
 ### Badger 2040 W
 
@@ -33,7 +56,8 @@ There is no handling of a battery storage. As only the grid consumption is monit
 - Upoad files on Badger 2040 W
     - `config.py`
     - `sunflower.py`
-    - async_urequests.py`
+    - `async_urequests.py` [modified async_requests included in release](https://github.com/phipunkt/async_urequests)  
+    Current in micropython included requests modules miss handling all cases needed. The modified library fixes some server handling to make it work. (SSL seems to be broken, but not used here.)
 - Edit files on Badger 2040 W, see below
     - `WIFI_CONFIG.py`
     - `main.py`  
@@ -122,8 +146,3 @@ Replace default launcher import with the following line.
 ```python
 import sunflower
 ```
-
-
-
-
-
