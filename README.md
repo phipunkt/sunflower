@@ -9,6 +9,10 @@ All runs in the local network which allows a fast update cycle to track clouds. 
 
 There is no handling of a battery storage. As only the grid consumption is monitored, this will not compete with a battery controller as only excess power to the grid is used for charging.
 
+![Sunflower running on Badger 2040 W](/pictures/badger_running_sunflower.jpg)
+
+Note: Wallbox power is smaller than available pv as the car is almost full and limits the charging.
+
 ## Hardware Requirements
 
 - Fronius inverter with datamanager (Symo, Gen 24, etc.)
