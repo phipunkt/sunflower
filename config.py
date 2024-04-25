@@ -2,13 +2,13 @@
 
 TIMEZONE = 1 # Number of hours difference between UTC (+ or -)
 DST = True # If True, enable automatic DST time setting
-IP_PV = "10.0.42.53" # IP or hostname pv inverter Fronius
-IP_WB = "10.0.42.60" # IP or hostname go-e charger
+IP_PV = "xxx.xxx.xxx.xxx" # IP or hostname pv inverter Fronius
+IP_WB = "xxx.xxx.xxx.xxx" # IP or hostname go-e charger
 I_MIN = 6 # Min charging current for car
 I_MAX = 16 # Max charging current
 I_MAX_1P = 16 # Set to country limit if less than I_MAX
 WB_METERED = False # Is the wallbox included in grid meter power value?
-CYCLE = 6 # Seconds data retrival while charging
+CYCLE = 6 # Seconds to wait between cycles while charging
 WAIT = 60 # Seconds to wait if no pv or no car
 WAIT_PHASE_CHANGE = 15 # Seconds to wait after phase change
 SHORT_CYCLES = 6 # Short average over given cycles, is 36s with default 6s cycle
