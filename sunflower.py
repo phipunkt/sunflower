@@ -1,6 +1,6 @@
 # PV car charge - Fronius + go-e
 # Martin Augustin
-# 240424
+# 240430
 
 # Import modules
 import badger2040
@@ -16,9 +16,10 @@ import config # Import settings from config file
 URL_PV = "http://"+config.IP_PV+"/solar_api/v1/GetPowerFlowRealtimeData.fcgi"
 URL_WB = "http://"+config.IP_WB+"/api/status?filter=alw,amp,car,dwo,frc,nrg,psm,tpa,wh"
 URL_WB_SET = "http://"+config.IP_WB+"/api/set?"
+OFFSET = 0.05 * config.CAR_BAT_SIZE
 
 # Variable declaration
-ntptime.host = "1.europe.pool.ntp.org"
+ntptime.host = config.NTP_HOST
 cycle = config.CYCLE
 list_grid = [] # List average grid power
 ampere = [0, 0] # Initialize list current calculation
@@ -207,26 +208,26 @@ while 1: # Loop forever
         phases = wb('1p3p')
         allow = wb('allow')
         energy = wb('energy')
-        percent_energy = round(energy*2)
+        percent_energy = energy/config.CAR_BAT_SIZE
         limit = wb('dwo')
-        if display.pressed(badger2040.BUTTON_UP): # Increase energy limit 2.5 kWh
-            limit_new = (limit+2.5)*1000
+        if display.pressed(badger2040.BUTTON_UP): # Increase energy limit equal 5% battery capacity
+            limit_new = (limit+OFFSET)*1000
             r = set_wb({'dwo':limit_new})
             print(f"Set limit to: {limit_new}")
             limit = limit_new/1000
             screen_update = 0
-        if display.pressed(badger2040.BUTTON_DOWN): # Decrease energy limit 2.5 kWh
-            if limit > 2.5:
-                limit_new = (limit-2.5)*1000
+        if display.pressed(badger2040.BUTTON_DOWN): # Decrease energy limit equal 5% battery capacity
+            if limit > OFFSET:
+                limit_new = (limit-OFFSET)*1000
                 r = set_wb({'dwo':limit_new})
                 print(f"Set limit to: {limit_new}")
                 limit = limit_new/1000
                 screen_update = 0
-        percent_limit = round(limit*2)
+        percent_limit = limit/config.CAR_BAT_SIZE
         print(f"P_WB:   {P_wb} W ({phases} phases)\n"+
         f"Allow: {allow}\n"+
-        f"Energy charged: {energy} kWh ({percent_energy}%)\n"+
-        f"Limit: {limit} kWh ({percent_limit}%)\n"+
+        f"Energy charged: {energy:.2f} kWh ({percent_energy:.0%})\n"+
+        f"Limit: {limit:.2f} kWh ({percent_limit:.0%})\n"+
         f"Average P_Grid: {grid_average}")
         display.text(f"{P_wba} W", 65-10*len(str(P_wba)), 65)
         display.text("WB", 15, 89)
@@ -234,8 +235,8 @@ while 1: # Loop forever
         display.set_pen(15)
         display.text(f"{phases} P", 60, 89)
         display.set_pen(0)
-        display.text(f"{energy} kWh ({percent_energy}%)", 105, 30)
-        display.text(f"{limit} kWh max. ({percent_limit}%)", 105, 60)
+        display.text(f"{energy:.2f} kWh ({percent_energy:.0%})", 105, 30)
+        display.text(f"{limit:.1f} kWh max. ({percent_limit:.0%})", 105, 60)
         if allow and wb('car') == 2 and P_Grid != 0:
             display.text("Charging", 105, 90)
             cycle = config.CYCLE
@@ -280,7 +281,6 @@ while 1: # Loop forever
             if cycle != config.WAIT:
                 cycle = config.WAIT
                 screen_update = 0
-
 
     else: # No wallbox data
         print("Wallbox offline")

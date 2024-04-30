@@ -2,8 +2,10 @@
 
 TIMEZONE = 1 # Number of hours difference between UTC (positive or negative number)
 DST = True # If True, enable automatic DST time setting. False: No DST correction used.
+NTP_HOST = "1.europe.pool.ntp.org" # NTP timeserver hostname
 IP_PV = "xxx.xxx.xxx.xxx" # IP or hostname pv inverter Fronius, change to your your configuration
 IP_WB = "xxx.xxx.xxx.xxx" # IP or hostname go-e charger, change to your configuration
+CAR_BAT_SIZE = 50 # Car battery maximum capacity in kWh, used for percentage calculation
 I_MIN = 6 # Minimum charging current for car in ampere (usually 6 A)
 I_MAX = 16 # Maximum charging current allowed, electric installation and charger type. 16 A is for 11 kW charger.
 I_MAX_1P = 16 # Maximum current limit for 1 phase, set to country limit if less than I_MAX

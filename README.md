@@ -77,11 +77,17 @@ Number of hours difference between UTC (positive or negative number)
 `DST` - Default value: `True`  
 If `True`, enable automatic DST time setting. `False`: No DST correction used.
 
+`NTP_HOST` - Default value: `"1.europe.pool.ntp.org"`  
+Hostname for NTP time server
+
 `IP_PV` - Default value: `"xxx.xxx.xxx.xxx"`  
 IP or hostname pv inverter Fronius, change to your your configuration
 
 `IP_WB` - Default value: `"xxx.xxx.xxx.xxx"`  
 IP or hostname go-e charger, change to your configuration
+
+`CAR_BAT_SIZE` - Default value: `50`  
+Car battery maximum capacity in kWh, used for percentage calculation charge status and limit
 
 `I_MIN` - Default value: `6`  
 Minimum charging current for car in ampere (usually 6 A)
