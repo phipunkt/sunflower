@@ -60,7 +60,7 @@ After initial setup, pv charging is mostly automatic.
 - Upoad files on Badger 2040 W
     - `config.py`
     - `sunflower.py`
-    - `async_urequests.py` [modified async_requests included in release](https://github.com/phipunkt/async_urequests)  
+    - `async_urequests.py` [modified async_urequests](https://github.com/phipunkt/async_urequests) is included in release  
     Current in micropython included requests modules miss handling all cases needed. The modified library fixes some server handling to make it work. (SSL seems to be broken, but not used here.)
 - Edit files on Badger 2040 W, see below
     - `WIFI_CONFIG.py`
