@@ -1,6 +1,6 @@
 # PV car charge - Fronius + go-e
 # Martin Augustin
-# 240430
+# 250305
 
 # Import modules
 import badger2040
@@ -46,9 +46,8 @@ def time_dst(timezone, dst): # Local time with dst function
         HMarch   = time.mktime((year,3 ,(31-(int(5*year/4+4))%7),1,0,0,0,0,0)) #Time of March change to CEST
         HOctober = time.mktime((year,10,(31-(int(5*year/4+1))%7),1,0,0,0,0,0)) #Time of October change to CET
         if HMarch < now < HOctober:               
-            return time.localtime(now+timezone*7200) # CEST:  UTC+TIMEZONE HOURS + 1 HOUR
-    else:                            
-        return time.localtime(now+timezone*3600) # CET:  UTC+TIMEZONE HOURS
+            timezone = timezone + 1  # CEST:  UTC+TIMEZONE HOURS + 1 HOUR                           
+    return time.localtime(now+timezone*3600) # CET:  UTC+TIMEZONE HOURS
     
     
 def get_data(url,wait):
