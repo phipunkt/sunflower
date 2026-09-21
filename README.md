@@ -26,18 +26,19 @@ After initial setup, pv charging is mostly automatic.
 
 - In the go-e app under settings you need to make sure charging in allowed in the scheduler and define a kWh limit if you want to only charge to a certain level.
 - Set charge mode to standard (no ECO or next trip mode)
+- Enable "PV-Überschuss" on the ECO tab in the app and set the desired start power (previous `SWITCH_ON` setting in config.py)
 - Plug Badger 2040 W on a power supply, USB or on batteries to run.
 - Information is shown on the display
 - When data is retrived and the logic cycle is running, the LED in on.
-- Keep `UP` or `DOWN` button pressed during cycle (LED on) to change charge limit (+/- 2.5 kWh).
+- Press `UP` or `DOWN` button to change charge limit (+/- 5% of battery).
 
-- To stop unplug from power supply as the program will always run.
+- Most of the settings can be controlled with the go-e app
 
 #### Attention
 
 > If you want to charge when there is not enough pv power (e.g. during the night) or charge with full power, you have 2 options. Otherwise it will always stop the charging.
-> - Stop the program by cutting the power supply.
-> - Use the next trip mode. (Currently behaviour not fully tested)
+> - Use ECO or next-trip mode with desired settings
+> - Uncheck "charge with pv excess" in ECO settings
 
 ## Installation
 
@@ -107,8 +108,8 @@ Seconds to wait between cycles while charging (how close to follow the power gen
 `WAIT` - Default value: `60`  
 Seconds to wait if there is no pv power or no car connected
 
-`WAIT_PHASE_CHANGE` - Default value: `15`  
-Seconds to wait after phase change: May be removed if future
+`WAIT_PHASE_CHANGE` - Default value: `15`
+Seconds to wait after phase change
 
 `SHORT_CYCLES` - Default value: `6`  
 Number of program cycles to use for average calculation of short period grid power: Equals 36 s with default 6 s `CYCLE`
@@ -120,21 +121,6 @@ Number of program cycles to use for average calculation of long period grid powe
 Seconds to wait between badger screen updates (not used for status updates e.g. phase change), checked only on each cycle, so no exact timing
 
 > Power values defined below are negative for excess pv and positive for grid consumption
-
-`P_MIN_1P` - Default value: `-1440`  
-Minimum power in W for 1p charging ampere calculation (I_MIN x U max), no need to change
-
-`P_MIN_3P` - Default value: `-4320`  
-Minimum power in W for 3p charging ampere calculation (I_MIN x U max), no need to change
-
-`SWITCH_3P` - Default value: `-4200`
-Power threshold in W to switch for 3 phase charging
-
-`SWITCH_1P` - Default value: `-3800`  
-Power threshold in W to switch for 1 phase charging
-
-`SWITCH_ON` - Default value: `-1300`  
-Power threshold in W to start charging when average of LONG_CYCLES is below (more power available)
 
 `SWITCH_OFF` - Default value: `-900`  
 Power threshold in W to stop charging when average of LONG_CYCLE is above (less power available), default allows up to 400 W grid consumption.
